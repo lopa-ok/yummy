@@ -1,8 +1,11 @@
 document.getElementById('ingredient-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const ingredients = document.getElementById('ingredients').value;
-    fetchRecipes(ingredients);
+    const selectedIngredients = Array.from(document.querySelectorAll('input[name="ingredients"]:checked'))
+        .map(checkbox => checkbox.value)
+        .join(',');
+
+    fetchRecipes(selectedIngredients);
 });
 
 function fetchRecipes(ingredients) {
@@ -20,7 +23,7 @@ function displayRecipes(recipes) {
     recipesDiv.innerHTML = '';
 
     if (recipes.length === 0) {
-        recipesDiv.innerHTML = '<p>No recipes found for the given ingredients.</p>';
+        recipesDiv.innerHTML = '<p>No recipes found for the selected ingredients.</p>';
         return;
     }
 
